@@ -1,41 +1,105 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>jikanwari</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
-    body{
-      font-family: Inter, system-ui;
-      max-width: 720px;
-      margin: 60px auto;
-      padding: 24px;
-      line-height: 1.7;
-      color: #111;
+    * {
+      box-sizing: border-box;
     }
-    h1{font-size:42px}
-    .muted{color:#666}
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: #f7f8fa;
+      color: #111827;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin: 0 0 12px;
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      margin-top: 48px;
+      font-size: 24px;
+    }
+
+    p {
+      line-height: 1.7;
+      color: #374151;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 20px;
+      box-shadow:
+        0 1px 3px rgba(0,0,0,.04),
+        0 8px 24px rgba(0,0,0,.04);
+    }
+
+    .muted {
+      color: #6b7280;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    ul {
+      padding-left: 20px;
+      line-height: 1.8;
+      color: #374151;
+    }
   </style>
 </head>
 <body>
-  <h1>jikanwari</h1>
+  <main class="container">
+    <h1>jikanwari</h1>
 
-  <p>
-    jikanwari is a personal software project focused on building tools
-    for timetable management and scheduling.
-  </p>
+    <p>
+      A collaborative timetable and assignment information platform
+      built for students at our school.
+    </p>
 
-  <p>
-    Currently in active development.
-  </p>
+    <div class="card">
+      <h2>About</h2>
+      <p>
+        jikanwari is a student-built web project designed to help
+        students organize and share school-related information in one place.
+      </p>
 
-  <p class="muted">
-    Built with Cloudflare Workers.
-  </p>
+      <p>
+        It allows timetable information, homework deadlines,
+        submission reminders, and updates to be shared collaboratively
+        within our school community.
+      </p>
+    </div>
 
-  <p>
-    GitHub:
-    https://github.com/8apricity
-  </p>
+    <div class="card">
+      <h2>Planned Features</h2>
+      <ul>
+        <li>Shared timetable management</li>
+        <li>Assignment and homework tracking</li>
+        <li>Submission deadline reminders</li>
+        <li>Collaborative editing by students</li>
+        <li>School-specific information sharing</li>
+      </ul>
+    </div>
+
+    <p class="muted">
+      Built as a non-commercial software project for internal school use.
+      Currently under active development.
+    </p>
+  </main>
 </body>
 </html>
