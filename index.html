@@ -6,100 +6,901 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8;
+      --panel: #ffffff;
+      --panel-soft: #eef3f7;
+      --ink: #17202a;
+      --muted: #637083;
+      --line: #d8e0e8;
+      --accent: #177e89;
+      --accent-dark: #0f5961;
+      --warn: #b7791f;
+      --danger: #b42318;
+      --ok: #2f855a;
+      --shadow: 0 10px 30px rgba(24, 38, 51, 0.08);
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      font-family: Inter, system-ui, sans-serif;
-      background: #f7f8fa;
-      color: #111827;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(180deg, #eef3f6 0, var(--bg) 280px),
+        var(--bg);
+      color: var(--ink);
     }
 
-    .container {
-      max-width: 760px;
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 64px 24px;
+      padding: 28px 0 40px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
     }
 
     h1 {
-      font-size: 48px;
-      margin: 0 0 12px;
-      letter-spacing: -0.03em;
+      margin: 0;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1;
+      letter-spacing: 0;
     }
 
-    h2 {
-      margin-top: 48px;
-      font-size: 24px;
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
     }
 
-    p {
-      line-height: 1.7;
-      color: #374151;
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 auto;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
     }
 
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 24px;
-      margin-top: 20px;
-      box-shadow:
-        0 1px 3px rgba(0,0,0,.04),
-        0 8px 24px rgba(0,0,0,.04);
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 4px rgba(47, 133, 90, 0.12);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.8fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(216, 224, 232, 0.9);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .tabs,
+    .days {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tab,
+    .day-button,
+    .ghost-button,
+    .primary-button,
+    .icon-button {
+      min-height: 38px;
+      border-radius: 7px;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease, transform 140ms ease;
+    }
+
+    .tab,
+    .day-button,
+    .ghost-button,
+    .icon-button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .tab,
+    .day-button {
+      padding: 0 12px;
+    }
+
+    .tab.active,
+    .day-button.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    .ghost-button {
+      padding: 0 12px;
+    }
+
+    .primary-button {
+      padding: 0 14px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .primary-button:hover {
+      background: var(--accent-dark);
+    }
+
+    .icon-button {
+      display: inline-grid;
+      width: 36px;
+      place-items: center;
+      color: var(--muted);
+    }
+
+    .tab:hover,
+    .day-button:hover,
+    .ghost-button:hover,
+    .icon-button:hover {
+      background: var(--panel-soft);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .timetable {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .timetable th,
+    .timetable td {
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    .timetable th:last-child,
+    .timetable td:last-child {
+      border-right: 0;
+    }
+
+    .timetable th {
+      height: 44px;
+      padding: 12px 10px;
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .period {
+      width: 74px;
+      background: #f8fafc;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .period span {
+      display: block;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .slot {
+      position: relative;
+      height: 118px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .slot.today {
+      background: #f1f9fa;
+    }
+
+    .subject {
+      display: flex;
+      flex-direction: column;
+      min-height: 88px;
+      gap: 7px;
+      padding: 10px;
+      border: 1px solid #cddfe2;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      background: #fbfefe;
+    }
+
+    .subject-name {
+      min-height: 22px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .subject-room,
+    .subject-note {
+      min-height: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .subject-note {
+      color: #475569;
+    }
+
+    .empty-slot {
+      display: grid;
+      min-height: 88px;
+      place-items: center;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: #9aa6b2;
+      font-size: 13px;
+    }
+
+    .side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .form {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(23, 126, 137, 0.14);
+    }
+
+    .assignment-list,
+    .notice-list {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      margin: 0;
+      list-style: none;
+    }
+
+    .assignment,
+    .notice {
+      display: grid;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .assignment-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .assignment-title {
+      margin: 0;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .pill.urgent {
+      background: #fff4e5;
+      color: var(--warn);
+    }
+
+    .pill.late {
+      background: #fee4e2;
+      color: var(--danger);
     }
 
     .muted {
-      color: #6b7280;
-      font-size: 14px;
-      margin-top: 40px;
+      color: var(--muted);
     }
 
-    ul {
-      padding-left: 20px;
-      line-height: 1.8;
-      color: #374151;
+    .empty {
+      padding: 24px 16px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .mobile-day {
+      display: none;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mobile-list {
+      display: none;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    body[data-view-mode="today"] .table-wrap {
+      display: none;
+    }
+
+    body[data-view-mode="today"] .mobile-day,
+    body[data-view-mode="today"] .mobile-list {
+      display: grid;
+    }
+
+    .mobile-period {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .mobile-period-number {
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      .topbar,
+      .panel-header,
+      .assignment-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .status {
+        width: fit-content;
+      }
+
+      .table-wrap {
+        display: none;
+      }
+
+      .mobile-day,
+      .mobile-list {
+        display: grid;
+      }
+
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <h1>jikanwari</h1>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">J</div>
+        <div>
+          <h1>jikanwari</h1>
+          <p class="subtitle">Shared timetable, assignments, and school updates for students.</p>
+        </div>
+      </div>
+      <div class="status" title="Saved on this device">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="saveStatus">Ready</span>
+      </div>
+    </header>
 
-    <p>
-      A collaborative timetable and assignment information platform
-      built for students at our school.
-    </p>
+    <div class="layout">
+      <section class="panel" aria-labelledby="timetableTitle">
+        <div class="panel-header">
+          <h2 class="panel-title" id="timetableTitle">Class Timetable</h2>
+          <div class="tabs" role="tablist" aria-label="Timetable view">
+            <button class="tab active" type="button" data-view="week">Week</button>
+            <button class="tab" type="button" data-view="today">Today</button>
+          </div>
+        </div>
 
-    <div class="card">
-      <h2>About</h2>
-      <p>
-        jikanwari is a student-built web project designed to help
-        students organize and share school-related information in one place.
-      </p>
+        <div class="mobile-day">
+          <div class="days" id="dayButtons"></div>
+        </div>
 
-      <p>
-        It allows timetable information, homework deadlines,
-        submission reminders, and updates to be shared collaboratively
-        within our school community.
-      </p>
+        <div class="table-wrap" id="weekView">
+          <table class="timetable" aria-label="Weekly timetable">
+            <thead>
+              <tr id="tableHead"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="mobile-list" id="mobileTimetable"></div>
+      </section>
+
+      <aside class="side">
+        <section class="panel" aria-labelledby="editorTitle">
+          <div class="panel-header">
+            <h2 class="panel-title" id="editorTitle">Quick Edit</h2>
+            <button class="ghost-button" type="button" id="resetDemo">Reset demo</button>
+          </div>
+
+          <form class="form" id="classForm">
+            <div class="grid-two">
+              <label>
+                Day
+                <select id="classDay" required></select>
+              </label>
+              <label>
+                Period
+                <select id="classPeriod" required></select>
+              </label>
+            </div>
+            <label>
+              Subject
+              <input id="classSubject" maxlength="32" placeholder="Mathematics" required />
+            </label>
+            <div class="grid-two">
+              <label>
+                Room
+                <input id="classRoom" maxlength="24" placeholder="Room 2-1" />
+              </label>
+              <label>
+                Note
+                <input id="classNote" maxlength="36" placeholder="Quiz, bring textbook" />
+              </label>
+            </div>
+            <button class="primary-button" type="submit">Save class</button>
+          </form>
+        </section>
+
+        <section class="panel" aria-labelledby="assignmentTitle">
+          <div class="panel-header">
+            <h2 class="panel-title" id="assignmentTitle">Assignments</h2>
+          </div>
+
+          <form class="form" id="assignmentForm">
+            <label>
+              Task
+              <input id="assignmentTask" maxlength="56" placeholder="English worksheet" required />
+            </label>
+            <div class="grid-two">
+              <label>
+                Subject
+                <input id="assignmentSubject" maxlength="28" placeholder="English" required />
+              </label>
+              <label>
+                Due date
+                <input id="assignmentDue" type="date" required />
+              </label>
+            </div>
+            <button class="primary-button" type="submit">Add assignment</button>
+          </form>
+
+          <ul class="assignment-list" id="assignmentList"></ul>
+        </section>
+
+        <section class="panel" aria-labelledby="updatesTitle">
+          <div class="panel-header">
+            <h2 class="panel-title" id="updatesTitle">Updates</h2>
+          </div>
+          <ul class="notice-list">
+            <li class="notice">
+              <strong>Tomorrow</strong>
+              <span class="muted">Science lab uses the west building room.</span>
+            </li>
+            <li class="notice">
+              <strong>Student council</strong>
+              <span class="muted">Shared edits are planned for the next version.</span>
+            </li>
+          </ul>
+        </section>
+      </aside>
     </div>
 
-    <div class="card">
-      <h2>Planned Features</h2>
-      <ul>
-        <li>Shared timetable management</li>
-        <li>Assignment and homework tracking</li>
-        <li>Submission deadline reminders</li>
-        <li>Collaborative editing by students</li>
-        <li>School-specific information sharing</li>
-      </ul>
-    </div>
-
-    <p class="muted">
+    <footer>
       Built as a non-commercial software project for internal school use.
-      Currently under active development.
-    </p>
+    </footer>
   </main>
+
+  <script>
+    const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+    const PERIODS = ["1", "2", "3", "4", "5", "6"];
+    const STORAGE_KEY = "jikanwari-demo-state";
+
+    const demoState = {
+      selectedDay: "Mon",
+      view: "week",
+      classes: {
+        "Mon-1": { subject: "Mathematics", room: "2-1", note: "Problem set review" },
+        "Mon-2": { subject: "English", room: "LL", note: "Reading check" },
+        "Mon-4": { subject: "History", room: "2-1", note: "Group notes" },
+        "Tue-1": { subject: "Science", room: "Lab 1", note: "Experiment" },
+        "Tue-3": { subject: "Japanese", room: "2-1", note: "Essay draft" },
+        "Wed-2": { subject: "Physical Ed.", room: "Gym", note: "Indoor shoes" },
+        "Wed-5": { subject: "Music", room: "Music", note: "Recorder" },
+        "Thu-1": { subject: "Geography", room: "2-1", note: "Map quiz" },
+        "Thu-4": { subject: "Art", room: "Art", note: "Sketchbook" },
+        "Fri-2": { subject: "Science", room: "Lab 2", note: "Report prep" },
+        "Fri-5": { subject: "Homeroom", room: "2-1", note: "Weekly wrap" }
+      },
+      assignments: [
+        { id: 1, task: "Math exercise pages 42-43", subject: "Mathematics", due: addDays(1) },
+        { id: 2, task: "Science lab reflection", subject: "Science", due: addDays(3) },
+        { id: 3, task: "English vocabulary quiz", subject: "English", due: addDays(5) }
+      ]
+    };
+
+    let state = loadState();
+
+    const saveStatus = document.getElementById("saveStatus");
+    const tableHead = document.getElementById("tableHead");
+    const tableBody = document.getElementById("tableBody");
+    const dayButtons = document.getElementById("dayButtons");
+    const mobileTimetable = document.getElementById("mobileTimetable");
+    const classForm = document.getElementById("classForm");
+    const classDay = document.getElementById("classDay");
+    const classPeriod = document.getElementById("classPeriod");
+    const classSubject = document.getElementById("classSubject");
+    const classRoom = document.getElementById("classRoom");
+    const classNote = document.getElementById("classNote");
+    const assignmentForm = document.getElementById("assignmentForm");
+    const assignmentTask = document.getElementById("assignmentTask");
+    const assignmentSubject = document.getElementById("assignmentSubject");
+    const assignmentDue = document.getElementById("assignmentDue");
+    const assignmentList = document.getElementById("assignmentList");
+
+    function addDays(days) {
+      const date = new Date();
+      date.setDate(date.getDate() + days);
+      return date.toISOString().slice(0, 10);
+    }
+
+    function loadState() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          return JSON.parse(stored);
+        }
+      } catch (error) {
+        console.warn("Could not read saved timetable", error);
+      }
+
+      return JSON.parse(JSON.stringify(demoState));
+    }
+
+    function persist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      saveStatus.textContent = "Saved";
+      window.setTimeout(() => {
+        saveStatus.textContent = "Ready";
+      }, 1100);
+    }
+
+    function classKey(day, period) {
+      return `${day}-${period}`;
+    }
+
+    function getTodayLabel() {
+      const jsDay = new Date().getDay();
+      return DAYS[jsDay - 1] || "Mon";
+    }
+
+    function setupSelectors() {
+      classDay.innerHTML = DAYS.map((day) => `<option value="${day}">${day}</option>`).join("");
+      classPeriod.innerHTML = PERIODS.map((period) => `<option value="${period}">${period}</option>`).join("");
+      assignmentDue.value = addDays(2);
+    }
+
+    function renderDayButtons() {
+      dayButtons.innerHTML = DAYS.map((day) => {
+        const active = day === state.selectedDay ? " active" : "";
+        return `<button class="day-button${active}" type="button" data-day="${day}">${day}</button>`;
+      }).join("");
+    }
+
+    function renderTable() {
+      const today = getTodayLabel();
+      tableHead.innerHTML = `<th class="period">Period</th>${DAYS.map((day) => `<th>${day}</th>`).join("")}`;
+      tableBody.innerHTML = PERIODS.map((period) => {
+        const cells = DAYS.map((day) => {
+          const item = state.classes[classKey(day, period)];
+          const todayClass = day === today ? " today" : "";
+          return `<td class="slot${todayClass}">${renderClass(item)}</td>`;
+        }).join("");
+
+        return `<tr><th class="period"><span>${period}</span></th>${cells}</tr>`;
+      }).join("");
+    }
+
+    function renderMobileTimetable() {
+      mobileTimetable.innerHTML = PERIODS.map((period) => {
+        const item = state.classes[classKey(state.selectedDay, period)];
+        return `
+          <div class="mobile-period">
+            <div class="mobile-period-number">${period}</div>
+            ${renderClass(item)}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderClass(item) {
+      if (!item || !item.subject) {
+        return `<div class="empty-slot">Free</div>`;
+      }
+
+      const room = item.room ? `<span class="subject-room">${escapeHtml(item.room)}</span>` : "";
+      const note = item.note ? `<span class="subject-note">${escapeHtml(item.note)}</span>` : "";
+      return `
+        <div class="subject">
+          <span class="subject-name">${escapeHtml(item.subject)}</span>
+          ${room}
+          ${note}
+        </div>
+      `;
+    }
+
+    function renderAssignments() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const sorted = [...state.assignments].sort((a, b) => a.due.localeCompare(b.due));
+      if (!sorted.length) {
+        assignmentList.innerHTML = `<li class="empty">No assignments yet.</li>`;
+        return;
+      }
+
+      assignmentList.innerHTML = sorted.map((item) => {
+        const due = new Date(`${item.due}T00:00:00`);
+        const diff = Math.round((due - today) / 86400000);
+        const dueText = diff < 0 ? `${Math.abs(diff)}d late` : diff === 0 ? "Due today" : `${diff}d left`;
+        const pillClass = diff < 0 ? " late" : diff <= 1 ? " urgent" : "";
+
+        return `
+          <li class="assignment">
+            <div class="assignment-head">
+              <h3 class="assignment-title">${escapeHtml(item.task)}</h3>
+              <button class="icon-button" type="button" data-remove="${item.id}" aria-label="Remove assignment">x</button>
+            </div>
+            <div class="meta">
+              <span class="pill">${escapeHtml(item.subject)}</span>
+              <span class="pill${pillClass}">${dueText}</span>
+              <span class="pill">${item.due}</span>
+            </div>
+          </li>
+        `;
+      }).join("");
+    }
+
+    function renderTabs() {
+      document.body.dataset.viewMode = state.view;
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.classList.toggle("active", tab.dataset.view === state.view);
+      });
+
+      if (state.view === "today") {
+        state.selectedDay = getTodayLabel();
+      }
+    }
+
+    function render() {
+      renderTabs();
+      renderDayButtons();
+      renderTable();
+      renderMobileTimetable();
+      renderAssignments();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    classForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      state.classes[classKey(classDay.value, classPeriod.value)] = {
+        subject: classSubject.value.trim(),
+        room: classRoom.value.trim(),
+        note: classNote.value.trim()
+      };
+      persist();
+      render();
+      classForm.reset();
+      classDay.value = state.selectedDay;
+      classPeriod.value = "1";
+    });
+
+    assignmentForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      state.assignments.push({
+        id: Date.now(),
+        task: assignmentTask.value.trim(),
+        subject: assignmentSubject.value.trim(),
+        due: assignmentDue.value
+      });
+      persist();
+      render();
+      assignmentForm.reset();
+      assignmentDue.value = addDays(2);
+    });
+
+    assignmentList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove]");
+      if (!button) return;
+
+      state.assignments = state.assignments.filter((item) => String(item.id) !== button.dataset.remove);
+      persist();
+      render();
+    });
+
+    dayButtons.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-day]");
+      if (!button) return;
+
+      state.selectedDay = button.dataset.day;
+      state.view = "week";
+      render();
+      persist();
+    });
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        state.view = tab.dataset.view;
+        if (state.view === "today") {
+          state.selectedDay = getTodayLabel();
+        }
+        render();
+        persist();
+      });
+    });
+
+    document.getElementById("resetDemo").addEventListener("click", () => {
+      state = JSON.parse(JSON.stringify(demoState));
+      persist();
+      render();
+    });
+
+    setupSelectors();
+    classDay.value = state.selectedDay;
+    classPeriod.value = "1";
+    render();
+  </script>
 </body>
 </html>
