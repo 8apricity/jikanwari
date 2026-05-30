@@ -11,3 +11,7 @@ Use the default Matt Pocock skill triage labels. See `docs/agents/triage-labels.
 ### Domain docs
 
 This repo uses a single-context domain-doc layout. See `docs/agents/domain.md`.
+
+## Change reports
+
+When an agent changes files in this repo, include an example commit title in the final response.
