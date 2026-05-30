@@ -98,7 +98,7 @@ A report shown to one responding student that compares their own submitted answe
 _Avoid_: Public ranking, individual comparison
 
 **Timetable**:
-A student's displayed schedule for a school day or week, produced from a standard timetable and later timetable changes. A timetable can differ by grade, class, track, and individual student.
+A student's displayed schedule for a school day, week, or school year, produced from a standard timetable and later timetable changes. A timetable can differ by grade, class, track, and individual student.
 _Avoid_: Calendar, event list
 
 **Daily Plan**:
@@ -114,7 +114,7 @@ The baseline recurring timetable for a class and track in a school year. Timetab
 _Avoid_: Default calendar, school-wide timetable
 
 **Timetable Change**:
-A date-specific change that replaces or adjusts part of the standard timetable for a target scope. Timetable changes can be grade-wide, class-specific, track-specific, student-specific, planned in advance, or sudden.
+A date-specific change that modifies part of the standard timetable for a target scope. Timetable changes can be grade-wide, class-specific, track-specific, student-specific, planned in advance, or sudden.
 _Avoid_: Calendar event, announcement, emergency change
 
 **School Year**:
@@ -179,32 +179,8 @@ _Avoid_: Chat, board, social media post
 
 ## Example Dialogue
 
-Developer: Should a user from another high school be able to join this workspace?
-Domain expert: No. Jikanwari has exactly one school community, and membership is limited to people in that high school.
-
-Developer: Can teachers or administrators participate in Jikanwari?
-Domain expert: No. Jikanwari is for students only.
-
 Developer: How does Jikanwari know a student's class and track?
 Domain expert: The student selects their own affiliation when creating their student account.
-
-Developer: Which name should appear on ordinary shared information?
-Domain expert: The student's display name. Real names are reserved for named responses where knowing who answered matters.
-
-Developer: Can a student fix their affiliation if they chose the wrong class?
-Domain expert: Yes. A student can change their own affiliation.
-
-Developer: When a new school year begins, does Jikanwari automatically move students to the next grade?
-Domain expert: No. Students renew their own affiliation for the new school year.
-
-Developer: If three students say the assignment is due Friday, is that official?
-Domain expert: No. It is shared information with higher trust, not an official school announcement.
-
-Developer: What happens if two students post different due dates for the same task?
-Domain expert: They are competing information candidates. The candidate with stronger confirmation can be preferred, but alternatives remain inspectable.
-
-Developer: Is the preferred candidate guaranteed to be correct?
-Domain expert: No. It is the strongest candidate according to trust signals, not an official or guaranteed answer.
 
 Developer: If the same student posts several accurate tasks, does that student get a public trust score?
 Domain expert: No. Trust scores belong to shared information, not to students.
@@ -218,19 +194,13 @@ Domain expert: No. Only confirmations from students inside the target scope cont
 Developer: Is a test result collection the school's official grade record?
 Domain expert: No. Students submit their own results for community aggregation and personalised reports.
 
-Developer: Does the privacy threshold mean enough students answered for the result to be statistically reliable?
-Domain expert: No. It means enough students answered that individual students are not reasonably inferable from the aggregate.
-
-Developer: Can a student create a thread without choosing who it is for?
-Domain expert: No. Every thread has a target scope, though it may also refer to a task, timetable change, request, or test result collection.
-
 Developer: Can a student create a request for another class they do not belong to?
 Domain expert: No. The target scope must include the creator.
 
 Developer: Can a student post a timetable change for a friend's class?
 Domain expert: No. Timetable changes and tasks follow creator scope too; someone in that target scope should create it.
 
-Developer: What does "Monday period 1" mean in a timetable change?
+Developer: What does "月1" mean in a timetable change?
 Domain expert: It means the subject or lesson from period 1 on Monday in the standard timetable.
 
 Developer: Does the standard timetable change each term?
